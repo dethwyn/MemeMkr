@@ -1,7 +1,7 @@
 import os
 import logging
 from uuid import uuid4
-from threading import Thread
+import multiprocessing
 
 from telegram import InlineQueryResultArticle, ParseMode, \
     InputTextMessageContent
@@ -94,6 +94,7 @@ def start_bot():
 
 
 def start_server():
+    print('starting server...')
     tornado_server.start_server()
 
 
@@ -102,4 +103,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    p = multiprocessing.Process(target=start_server)
+    p.start()
+    start_bot()
