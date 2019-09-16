@@ -1,13 +1,16 @@
 import os
 import logging
 from uuid import uuid4
+from threading import Thread
 
 from telegram import InlineQueryResultArticle, ParseMode, \
     InputTextMessageContent
 from telegram.ext import Updater, InlineQueryHandler, CommandHandler
 from telegram.utils.helpers import escape_markdown
-import imggen
 from dotenv import load_dotenv
+
+import imggen
+import tornado_server
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -59,7 +62,7 @@ def error(update, context):
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
 
-def main():
+def start_bot():
     imggen.init_memelib()
     imggen.init_fonts()
     load_dotenv()
@@ -83,9 +86,19 @@ def main():
     dp.add_handler(InlineQueryHandler(inlinequery))
 
     dp.add_error_handler(error)
-
+    print('starting bot...')
     updater.start_polling()
     updater.idle()
+    while True:
+        pass
+
+
+def start_server():
+    tornado_server.start_server()
+
+
+def main():
+    start_bot()
 
 
 if __name__ == '__main__':
