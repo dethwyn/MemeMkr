@@ -9,6 +9,7 @@ verify_ssl = true
 python-telegram-bot = {extras = ["socks"],version = "*"}
 python-dotenv = "*"
 pillow = "*"
+tornado = "*"
 
 [requires]
 python_version = "3.7"

@@ -68,8 +68,8 @@ def __image_processing(tag: str = 'kokainum', message: list = ['hello']) -> str:
                                         FONTS['Lobster'],
                                         message[1], stroke_offset=7)
         img = __create_image(img, [inscription1, inscription2]).convert('RGB')
-    img.save('meme.jpg')
-    return os.path.abspath('meme.jpg')
+    img.save('meme.png')
+    return os.path.abspath('meme.png')
 
 
 def __create_image(img: Image.Image, inscription: list):
