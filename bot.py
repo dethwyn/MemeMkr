@@ -1,16 +1,14 @@
-import os
-import logging
-from uuid import uuid4
-import multiprocessing
+# 352593518
 
-from telegram import InlineQueryResultArticle, ParseMode, \
-    InputTextMessageContent
-from telegram.ext import Updater, InlineQueryHandler, CommandHandler
-from telegram.utils.helpers import escape_markdown
+import logging
+import os
+from uuid import uuid4
+
 from dotenv import load_dotenv
+from telegram import InlineQueryResultCachedPhoto
+from telegram.ext import Updater, InlineQueryHandler, CommandHandler
 
 from inscript import generate_image, init_fonts, init_memelib
-import tornado_server
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -19,54 +17,70 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def start(update, context):
-    """Send a message when the command /start is issued."""
-    update.message.reply_text('Hi!')
+class MemeMkrBot:
+    def __init__(self):
+        load_dotenv()
+        token = os.getenv('TOKEN')
+        proxy_url = os.getenv('PROXY_URL')
+        proxy_username = os.getenv('PROXY_USERNAME')
+        proxy_password = os.getenv('PROXY_PASSWORD')
+        request_kwargs = {
+            'proxy_url': proxy_url,
+            'urllib3_proxy_kwargs': {
+                'username': proxy_username,
+                'password': proxy_password,
+            }
+        }
+        self.updater = Updater(token, use_context=True,
+                               request_kwargs=request_kwargs)
 
+        # UPDATER.bot.send_photo('352593518', file)
+        self.dp = self.updater.dispatcher
 
-def help(update, context):
-    """Send a message when the command /help is issued."""
-    update.message.reply_text('Help!')
+        self.dp.add_handler(CommandHandler("start", self.start))
+        self.dp.add_handler(CommandHandler("help", self.help))
+        self.dp.add_handler(InlineQueryHandler(self.inlinequery))
 
+        self.dp.add_error_handler(self.error)
 
-def inlinequery(update, context):
-    """Handle the inline query."""
-    query = update.inline_query.query
-    MEME_PATH = generate_image(query)
-    print(MEME_PATH)
-    """
-    results = [
-        InlineQueryResultArticle(
-            id=uuid4(),
-            title="Caps",
-            input_message_content=InputTextMessageContent(
-                query.upper())),
-        InlineQueryResultArticle(
-            id=uuid4(),
-            title="Bold",
-            input_message_content=InputTextMessageContent(
-                "*{}*".format(escape_markdown(query)),
-                parse_mode=ParseMode.MARKDOWN)),
-        InlineQueryResultArticle(
-            id=uuid4(),
-            title="Italic",
-            input_message_content=InputTextMessageContent(
-                "_{}_".format(escape_markdown(query)),
-                parse_mode=ParseMode.MARKDOWN))]
+        print('starting bot...')
+        self.updater.start_polling()
+        self.updater.idle()
 
-    update.inline_query.answer(results)
-    """
+    def start(self, update, context):
+        """Send a message when the command /start is issued."""
+        update.message.reply_text('Hi!')
 
+    def help(self, update, context):
+        """Send a message when the command /help is issued."""
+        update.message.reply_text('Help!')
 
-def error(update, context):
-    """Log Errors caused by Updates."""
-    logger.warning('Update "%s" caused error "%s"', update, context.error)
+    def inlinequery(self, update, context):
+        """Handle the inline query."""
+        query = update.inline_query.query
+        MEME_PATH = generate_image(query)
+        msg = self.updater.bot.send_photo(chat_id='352593518',
+                                          photo=open(MEME_PATH, "rb"))
+        file_id = msg.photo[0].file_id
+        print(MEME_PATH)
 
+        results = [
+            InlineQueryResultCachedPhoto(
+                id=uuid4(),
+                photo_file_id=file_id,
+            )]
 
+        update.inline_query.answer(results)
+
+    def error(update, context):
+        """Log Errors caused by Updates."""
+        logger.warning('Update "%s" caused error "%s"', update, context.error)
+
+"""
 def start_bot():
     init_memelib()
     init_fonts()
-    load_dotenv()
+
     token = os.getenv('TOKEN')
     proxy_url = os.getenv('PROXY_URL')
     proxy_username = os.getenv('PROXY_USERNAME')
@@ -79,27 +93,27 @@ def start_bot():
         }
     }
     print(request_kwargs)
-    updater = Updater(token, use_context=True, request_kwargs=request_kwargs)
+    UPDATER = Updater(token, use_context=True, request_kwargs=request_kwargs)
 
-    dp = updater.dispatcher
+    # UPDATER.bot.send_photo('352593518', file)
+    dp = UPDATER.dispatcher
 
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
     dp.add_handler(InlineQueryHandler(inlinequery))
 
     dp.add_error_handler(error)
+
     print('starting bot...')
-    updater.start_polling()
-    updater.idle()
-
-
-def start_server():
-    print('starting server...')
-    tornado_server.start_server()
-
+    UPDATER.start_polling()
+    UPDATER.idle()
+"""
 
 if __name__ == '__main__':
     # main()
     # p = multiprocessing.Process(target=start_server)
     # p.start()
-    start_bot()
+    init_memelib()
+    init_fonts()
+    bot = MemeMkrBot()
+

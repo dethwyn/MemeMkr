@@ -74,6 +74,7 @@ FONTS = dict()
 basedir_name = os.path.dirname(__file__)
 basedir_path = os.path.abspath(basedir_name)
 
+
 def init_memelib() -> None:
     """
     Initializes the image library from the specified path
@@ -81,7 +82,6 @@ def init_memelib() -> None:
     """
     listdir = os.listdir('memelib')
     for item in listdir:
-
         key = item.split('.')[0]
         MEMELIB[key] = basedir_path + r'/memelib/' + item
         print(MEMELIB[key])
