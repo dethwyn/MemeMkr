@@ -82,6 +82,7 @@ def init_memelib() -> None:
     for item in listdir:
         key = item.split('.')[0]
         MEMELIB[key] = os.path.abspath(item)
+        print(MEMELIB[key])
         print('Picture {0} found'.format(key))
 
 
@@ -94,6 +95,7 @@ def init_fonts() -> None:
     for item in listdir:
         key = item.split('.')[0]
         FONTS[key] = os.path.abspath(item)
+        print(FONTS[key])
         print('Font {0} found'.format(key))
 
 
