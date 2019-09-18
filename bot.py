@@ -61,7 +61,7 @@ class MemeMkrBot:
         self.updater.bot.delete_message(chat_id='352593518',
                                         message_id=msg.message_id)
         name = msg.chat['username']
-        MEME_PATH = generate_image(query, name)
+        MEME_PATH = generate_image(query, '{0}{1}'.format(name, 'IMG'))
         msg = self.updater.bot.send_photo(chat_id='352593518',
                                           photo=open(MEME_PATH, "rb"))
         file_id = msg.photo[0].file_id
