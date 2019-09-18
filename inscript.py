@@ -120,7 +120,7 @@ def __image_processing(tag: str = 'kokainum',
     if tag == 'wolf':
         inscription1 = InscriptionImage((400, 100),
                                         (center_image_x, center_image_y - 200),
-                                        r'fonts/UbuntuMono-Bold.ttf',
+                                        FONTS['Lobster'],
                                         message[0])
         img = __create_image(img, [inscription1]).convert('RGB')
     if tag == 'kerildiman':
