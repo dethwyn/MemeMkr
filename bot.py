@@ -12,8 +12,6 @@ from dotenv import load_dotenv
 from inscript import generate_image, init_fonts, init_memelib
 import tornado_server
 
-MEME_PATH = ''
-
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO)
@@ -35,6 +33,7 @@ def inlinequery(update, context):
     """Handle the inline query."""
     query = update.inline_query.query
     MEME_PATH = generate_image(query)
+    print(MEME_PATH)
     """
     results = [
         InlineQueryResultArticle(
