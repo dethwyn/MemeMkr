@@ -71,7 +71,8 @@ class InscriptionImage:
 
 MEMELIB = dict()
 FONTS = dict()
-
+basedir_name = os.path.dirname(__file__)
+basedir_path = os.path.abspath(basedir_name)
 
 def init_memelib() -> None:
     """
@@ -80,8 +81,9 @@ def init_memelib() -> None:
     """
     listdir = os.listdir('memelib')
     for item in listdir:
+
         key = item.split('.')[0]
-        MEMELIB[key] = r'/app/memelib/' + item
+        MEMELIB[key] = basedir_path + r'/memelib/' + item
         print(MEMELIB[key])
         print('Picture {0} found'.format(key))
 
@@ -94,7 +96,7 @@ def init_fonts() -> None:
     listdir = os.listdir('fonts')
     for item in listdir:
         key = item.split('.')[0]
-        FONTS[key] = r'/app/fonts/' + item
+        FONTS[key] = basedir_path + r'/fonts/' + item
         print(FONTS[key])
         print('Font {0} found'.format(key))
 

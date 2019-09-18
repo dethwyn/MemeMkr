@@ -64,11 +64,6 @@ def error(update, context):
 
 
 def start_bot():
-    BASEDIR_NAME = os.path.dirname(__file__)
-    BASEDIR_PATH = os.path.abspath(BASEDIR_NAME)
-    ld = os.listdir(BASEDIR_PATH)
-    for i in ld:
-        print(os.path.abspath(i))
     init_memelib()
     init_fonts()
     load_dotenv()
@@ -105,6 +100,6 @@ def start_server():
 
 if __name__ == '__main__':
     # main()
-    p = multiprocessing.Process(target=start_server)
-    p.start()
+    # p = multiprocessing.Process(target=start_server)
+    # p.start()
     start_bot()

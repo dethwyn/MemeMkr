@@ -17,8 +17,8 @@ class MainHandler(tornado.web.RequestHandler):
 
 class ImageHandler(tornado.web.RequestHandler):
     def get(self, name):
-        file_location = bot.MEME_PATH
-        # file_location = os.path.join(BASEDIR_PATH, name + ".png")
+        # file_location = bot.MEME_PATH
+        file_location = os.path.join(BASEDIR_PATH, name + ".png")
         print(file_location)
         if not os.path.isfile(file_location):
             raise tornado.web.HTTPError(status_code=404)
@@ -39,7 +39,7 @@ def make_app():
     ])
 
 
-def start_server():
+if __name__ == "__main__":
     app = make_app()
     app.listen(8888)
     tornado.ioloop.IOLoop.current().start()
