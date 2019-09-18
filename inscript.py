@@ -35,16 +35,10 @@ class InscriptionImage:
 
     @staticmethod
     def __init_stroke_coords(x: int, y: int, offset: int):
+        offset = [[0, 3], [-2, 2], [-3, 0], [-2, -2], [0, -3], [2, -2], [3, 0]]
         stroke_coords: List[Tuple[int, int]] = []
-        for i in range(1, offset + 1):
-            stroke_coords.append((x - i, y))
-            stroke_coords.append((x + i, y))
-            stroke_coords.append((x, y + i))
-            stroke_coords.append((x, y - i))
-            stroke_coords.append((x - i, y - i))
-            stroke_coords.append((x + i, y + i))
-            stroke_coords.append((x - i, y + i))
-            stroke_coords.append((x + i, y - i))
+        for i in offset:
+            stroke_coords.append((x + i[0], y + i[1]))
         return stroke_coords
 
     def __create_image(self) -> Image.Image:
@@ -68,8 +62,8 @@ class InscriptionImage:
                 for i in __stroke_coords:
                     draw.multiline_text(i, message, self.stroke_color,
                                         font, align='center')
-                img = img.filter(ImageFilter.GaussianBlur(3))
-                draw = ImageDraw.ImageDraw(img)
+                # img = img.filter(ImageFilter.GaussianBlur(3))
+                # draw = ImageDraw.ImageDraw(img)
                 draw.multiline_text((x, y), message, (255, 255, 255),
                                     font, align='center')
                 return img

@@ -77,6 +77,7 @@ def start_bot():
             'password': proxy_password,
         }
     }
+    print(request_kwargs)
     updater = Updater(token, use_context=True, request_kwargs=request_kwargs)
 
     dp = updater.dispatcher
@@ -89,8 +90,6 @@ def start_bot():
     print('starting bot...')
     updater.start_polling()
     updater.idle()
-    while True:
-        pass
 
 
 def start_server():
@@ -98,11 +97,8 @@ def start_server():
     tornado_server.start_server()
 
 
-def main():
-    start_bot()
-
-
 if __name__ == '__main__':
+    # main()
     p = multiprocessing.Process(target=start_server)
     p.start()
     start_bot()
