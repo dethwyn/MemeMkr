@@ -4,6 +4,7 @@ import os
 import tornado.ioloop
 import tornado.web
 from PIL import Image
+import bot
 
 BASEDIR_NAME = os.path.dirname(__file__)
 BASEDIR_PATH = os.path.abspath(BASEDIR_NAME)
@@ -16,7 +17,8 @@ class MainHandler(tornado.web.RequestHandler):
 
 class ImageHandler(tornado.web.RequestHandler):
     def get(self, name):
-        file_location = os.path.join(BASEDIR_PATH, name + ".png")
+        file_location = bot.MEME_PATH
+        # file_location = os.path.join(BASEDIR_PATH, name + ".png")
         print(file_location)
         if not os.path.isfile(file_location):
             raise tornado.web.HTTPError(status_code=404)

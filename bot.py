@@ -9,8 +9,10 @@ from telegram.ext import Updater, InlineQueryHandler, CommandHandler
 from telegram.utils.helpers import escape_markdown
 from dotenv import load_dotenv
 
-import imggen
+from inscript import generate_image, init_fonts, init_memelib
 import tornado_server
+
+MEME_PATH = ''
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -32,7 +34,7 @@ def help(update, context):
 def inlinequery(update, context):
     """Handle the inline query."""
     query = update.inline_query.query
-    imggen.generate_image(query)
+    MEME_PATH = generate_image(query)
     """
     results = [
         InlineQueryResultArticle(
@@ -63,8 +65,8 @@ def error(update, context):
 
 
 def start_bot():
-    imggen.init_memelib()
-    imggen.init_fonts()
+    init_memelib()
+    init_fonts()
     load_dotenv()
     token = os.getenv('TOKEN')
     proxy_url = os.getenv('PROXY_URL')
