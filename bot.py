@@ -68,7 +68,7 @@ def start_bot():
     BASEDIR_PATH = os.path.abspath(BASEDIR_NAME)
     ld = os.listdir(BASEDIR_PATH)
     for i in ld:
-        print(i)
+        print(os.path.abspath(i))
     init_memelib()
     init_fonts()
     load_dotenv()
