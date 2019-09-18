@@ -102,7 +102,7 @@ def init_fonts() -> None:
 
 
 def __image_processing(tag: str = 'kokainum',
-                       message: list = ['hello']) -> str:
+                       message: list = ['hello'], name: str = 'meme', ) -> str:
     """
     The basic function for image processing,
     calls separate methods for different tags
@@ -133,8 +133,8 @@ def __image_processing(tag: str = 'kokainum',
                                         FONTS['Lobster'],
                                         message[1], stroke_offset=7)
         img = __create_image(img, [inscription1, inscription2]).convert('RGB')
-    img.save('meme.png')
-    return os.path.abspath('meme.png')
+    img.save(name+'.png')
+    return os.path.abspath(name+'.png')
 
 
 def __create_image(img: Image.Image, inscription: list):
@@ -159,7 +159,7 @@ def __parse_query(raw_query: str):
     return tag, message
 
 
-def generate_image(query: str):
+def generate_image(query: str, name: str = 'meme'):
     tag, message = __parse_query(query)
-    result = __image_processing(tag, message)
+    result = __image_processing(tag, message, name)
     return result

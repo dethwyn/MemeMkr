@@ -34,7 +34,6 @@ class MemeMkrBot:
         self.updater = Updater(token, use_context=True,
                                request_kwargs=request_kwargs)
 
-        # UPDATER.bot.send_photo('352593518', file)
         self.dp = self.updater.dispatcher
 
         self.dp.add_handler(CommandHandler("start", self.start))
@@ -58,11 +57,16 @@ class MemeMkrBot:
     def inlinequery(self, update, context):
         """Handle the inline query."""
         query = update.inline_query.query
-        MEME_PATH = generate_image(query)
+        msg = self.updater.bot.send_message(chat_id='352593518', text='test')
+        self.updater.bot.delete_message(chat_id='352593518',
+                                        message_id=msg.message_id)
+        name = msg.chat['username']
+        MEME_PATH = generate_image(query, name)
         msg = self.updater.bot.send_photo(chat_id='352593518',
                                           photo=open(MEME_PATH, "rb"))
         file_id = msg.photo[0].file_id
-        print(MEME_PATH)
+        self.updater.bot.delete_message(chat_id='352593518',
+                                        message_id=msg.message_id)
 
         results = [
             InlineQueryResultCachedPhoto(
@@ -72,9 +76,10 @@ class MemeMkrBot:
 
         update.inline_query.answer(results)
 
-    def error(update, context):
+    def error(self, update, context):
         """Log Errors caused by Updates."""
         logger.warning('Update "%s" caused error "%s"', update, context.error)
+
 
 """
 def start_bot():
@@ -116,4 +121,3 @@ if __name__ == '__main__':
     init_memelib()
     init_fonts()
     bot = MemeMkrBot()
-
