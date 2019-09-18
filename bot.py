@@ -64,6 +64,11 @@ def error(update, context):
 
 
 def start_bot():
+    BASEDIR_NAME = os.path.dirname(__file__)
+    BASEDIR_PATH = os.path.abspath(BASEDIR_NAME)
+    ld = os.listdir(BASEDIR_PATH)
+    for i in ld:
+        print(i)
     init_memelib()
     init_fonts()
     load_dotenv()
