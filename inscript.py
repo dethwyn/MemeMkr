@@ -4,6 +4,11 @@ from typing import List, Tuple
 
 from PIL import Image, ImageFont, ImageDraw, ImageFilter
 
+MEME_LIB = {}
+FONTS = {}
+BASEDIR_NAME = os.path.dirname(__file__)
+BASEDIR_PATH = os.path.abspath(BASEDIR_NAME)
+
 
 class InscriptionImage:
     """
@@ -17,8 +22,7 @@ class InscriptionImage:
 
     def __init__(self, t_area_size: Tuple[int, int],
                  t_area_position: Tuple[int, int],
-                 font_path: str, message: List[str], angle: float = 0,
-                 stroke_offset: int = 4,
+                 font_path: str, message: str, angle: float = 0,
                  stroke_color: Tuple[int, int, int, int] = (
                          0, 0, 0, 255)):
         """ Constructor"""
@@ -30,11 +34,10 @@ class InscriptionImage:
         self.message = message
         self.angle = angle
         self.stroke_color = stroke_color
-        self.stroke_offset = stroke_offset
         self.img = self.__create_image()
 
     @staticmethod
-    def __init_stroke_coords(x: int, y: int, offset: int):
+    def __init_stroke_coords(x: int, y: int):
         offset = [[0, 3], [-2, 2], [-3, 0], [-2, -2], [0, -3], [2, -2], [3, 0]]
         stroke_coords: List[Tuple[int, int]] = []
         for i in offset:
@@ -57,22 +60,13 @@ class InscriptionImage:
                 font_size -= 2
             else:
                 x, y = center_area_x - text_w // 2, center_area_y - text_h // 2
-                __stroke_coords = self.__init_stroke_coords(x, y,
-                                                            self.stroke_offset)
+                __stroke_coords = self.__init_stroke_coords(x, y)
                 for i in __stroke_coords:
                     draw.multiline_text(i, message, self.stroke_color,
                                         font, align='center')
-                # img = img.filter(ImageFilter.GaussianBlur(3))
-                # draw = ImageDraw.ImageDraw(img)
                 draw.multiline_text((x, y), message, (255, 255, 255),
                                     font, align='center')
                 return img
-
-
-MEMELIB = dict()
-FONTS = dict()
-basedir_name = os.path.dirname(__file__)
-basedir_path = os.path.abspath(basedir_name)
 
 
 def init_memelib() -> None:
@@ -83,8 +77,7 @@ def init_memelib() -> None:
     listdir = os.listdir('memelib')
     for item in listdir:
         key = item.split('.')[0]
-        MEMELIB[key] = basedir_path + r'/memelib/' + item
-        print(MEMELIB[key])
+        MEME_LIB[key] = BASEDIR_PATH + '\\memelib\\' + item
         print('Picture {0} found'.format(key))
 
 
@@ -96,54 +89,60 @@ def init_fonts() -> None:
     listdir = os.listdir('fonts')
     for item in listdir:
         key = item.split('.')[0]
-        FONTS[key] = basedir_path + r'/fonts/' + item
-        print(FONTS[key])
+        FONTS[key] = BASEDIR_PATH + '\\fonts\\' + item
         print('Font {0} found'.format(key))
 
 
-def __image_processing(tag: str = 'kokainum',
-                       message: list = ['hello'], name: str = 'meme', ) -> str:
+def __image_processing(tag: str = None,
+                       message: list = None,
+                       name: str = 'meme', ) -> str:
     """
     The basic function for image processing,
     calls separate methods for different tags
     """
-    img = Image.open(MEMELIB[tag])
-    img = img.convert('RGBA')
+    inscript = []
+    if tag in MEME_LIB.keys():
+        img = Image.open(MEME_LIB[tag])
+        img = img.convert('RGBA')
+    else:
+        blank_size = (300, 150)
+        blank_fill = (255, 255, 255, 255)
+        img = Image.new('RGBA', blank_size, blank_fill)
+
     img_w, img_h = img.size
     center_image_x, center_image_y = img_w // 2, img_h // 2
+
     if tag == 'kokainum':
-        inscription1 = InscriptionImage((450, 150),
-                                        (center_image_x, center_image_y + 50),
-                                        FONTS['Lobster'],
-                                        message[0])
-        img = __create_image(img, [inscription1]).convert('RGB')
-    if tag == 'wolf':
-        inscription1 = InscriptionImage((400, 100),
-                                        (center_image_x, center_image_y - 200),
-                                        FONTS['Lobster'],
-                                        message[0])
-        img = __create_image(img, [inscription1]).convert('RGB')
-    if tag == 'kerildiman':
-        inscription1 = InscriptionImage((400, 100),
-                                        (center_image_x, center_image_y + 250),
-                                        FONTS['Lobster'],
-                                        message[0], stroke_offset=7)
-        inscription2 = InscriptionImage((400, 100),
-                                        (center_image_x, center_image_y - 50),
-                                        FONTS['Lobster'],
-                                        message[1], stroke_offset=7)
-        img = __create_image(img, [inscription1, inscription2]).convert('RGB')
-    img.save(name+'.png')
-    return os.path.abspath(name+'.png')
-
-
-def __create_image(img: Image.Image, inscription: list):
-    """The function of adding incriptions to the image"""
-    for i in inscription:
-        img.paste(i.img,
-                  i.t_area_position,
-                  i.img)
-    return img
+        area = (450, 150)
+        pos = (center_image_x, center_image_y + 120)
+        font = FONTS['Lobster']
+        text = message[0]
+        inscript.append(InscriptionImage(area, pos, font, text))
+    elif tag == 'wolf':
+        area = (400, 100)
+        pos = (center_image_x, center_image_y - 200)
+        font = FONTS['Lobster']
+        text = message[0]
+        inscript.append(InscriptionImage(area, pos, font, text))
+    elif tag == 'kerildiman':
+        area = (400, 100)
+        pos_up = (center_image_x, center_image_y - 50)
+        pos_down = (center_image_x, center_image_y + 250)
+        font = FONTS['Lobster']
+        text_up = message[0]
+        text_down = message[1]
+        inscript.append(InscriptionImage(area, pos_up, font, text_up))
+        inscript.append(InscriptionImage(area, pos_down, font, text_down))
+    else:
+        area = (290, 140)
+        pos = (center_image_x, center_image_y)
+        font = FONTS['Lobster']
+        text = message[0]
+        inscript.append(InscriptionImage(area, pos, font, text))
+    for i in inscript:
+        img.paste(i.img, i.t_area_position, i.img)
+    img.save(name + '.png')
+    return os.path.abspath(name + '.png')
 
 
 def __parse_query(raw_query: str):
@@ -156,7 +155,10 @@ def __parse_query(raw_query: str):
     message = []
     for item in query[1:]:
         message.append(item)
-    return tag, message
+    if not message:
+        return tag, ['empty message']
+    else:
+        return tag, message
 
 
 def generate_image(query: str, name: str = 'meme'):
