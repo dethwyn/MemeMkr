@@ -4,8 +4,8 @@ from typing import List, Tuple
 
 from PIL import Image, ImageFont, ImageDraw
 
+import global_var
 from global_var import BASEDIR_PATH, MEME_LIB, FONTS
-from global_var import KOKAINUM_TAGS
 
 
 class InscriptionImage:
@@ -95,8 +95,10 @@ def init_fonts() -> None:
 
 
 def __load_tag(tag: str) -> str:
-    if tag in KOKAINUM_TAGS:
+    if tag in global_var.KOKAINUM_TAGS:
         tag = 'kokainum'
+    if tag in global_var.SANDMAN_TAGS:
+        tag = 'sandman'
     return tag
 
 
@@ -114,6 +116,8 @@ def __image_processing(tag: str = None,
     """
     tag = __load_tag(tag)
     inscript = []
+    if not message:
+        message = ['empty message', 'empty message']
     if tag in MEME_LIB.keys():
         img = Image.open(MEME_LIB[tag])
         img = img.convert('RGBA')
@@ -124,7 +128,7 @@ def __image_processing(tag: str = None,
 
     img_w, img_h = img.size
     center_image_x, center_image_y = img_w // 2, img_h // 2
-
+    print(message)
     if tag == 'kokainum':
         area = (450, 150)
         pos = (center_image_x, center_image_y + 120)
@@ -141,6 +145,15 @@ def __image_processing(tag: str = None,
         area = (400, 100)
         pos_up = (center_image_x, center_image_y - 50)
         pos_down = (center_image_x, center_image_y + 250)
+        font = FONTS['Lobster']
+        text_up = message[0]
+        text_down = message[1]
+        inscript.append(InscriptionImage(area, pos_up, font, text_up))
+        inscript.append(InscriptionImage(area, pos_down, font, text_down))
+    elif tag == 'sandman':
+        area = (300, 100)
+        pos_up = (center_image_x, center_image_y - 220)
+        pos_down = (center_image_x, center_image_y + 200)
         font = FONTS['Lobster']
         text_up = message[0]
         text_down = message[1]
@@ -170,10 +183,7 @@ def __parse_query(raw_query: str):
     message = []
     for item in query[1:]:
         message.append(item)
-    if not message:
-        return tag, ['empty message']
-    else:
-        return tag, message
+    return tag, message
 
 
 def generate_image(query: str, name: str = 'meme'):
