@@ -1,5 +1,3 @@
-# 352593518
-
 import logging
 import os
 from uuid import uuid4
