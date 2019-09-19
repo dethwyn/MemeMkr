@@ -8,8 +8,8 @@ from dotenv import load_dotenv
 from telegram import InlineQueryResultCachedPhoto
 from telegram.ext import Updater, InlineQueryHandler, CommandHandler
 
-from inscript import generate_image, init_fonts, init_memelib
-
+from inscript import generate_image, init_fonts, init_meme_lib
+from global_var import CHANEL_ID
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO)
@@ -57,15 +57,13 @@ class MemeMkrBot:
     def inlinequery(self, update, context):
         """Handle the inline query."""
         query = update.inline_query.query
-        msg = self.updater.bot.send_message(chat_id='352593518', text='test')
-        self.updater.bot.delete_message(chat_id='352593518',
-                                        message_id=msg.message_id)
-        name = msg.chat['username']
-        MEME_PATH = generate_image(query, '{0}{1}'.format(name, 'IMG'))
-        msg = self.updater.bot.send_photo(chat_id='352593518',
-                                          photo=open(MEME_PATH, "rb"))
+        print()
+        name = update.inline_query.from_user['username']
+        meme_path = generate_image(query, '{0}{1}'.format(name, 'IMG'))
+        msg = self.updater.bot.send_photo(chat_id=CHANEL_ID,
+                                          photo=open(meme_path, "rb"))
         file_id = msg.photo[0].file_id
-        self.updater.bot.delete_message(chat_id='352593518',
+        self.updater.bot.delete_message(chat_id=CHANEL_ID,
                                         message_id=msg.message_id)
 
         results = [
@@ -80,44 +78,7 @@ class MemeMkrBot:
         """Log Errors caused by Updates."""
         logger.warning('Update "%s" caused error "%s"', update, context.error)
 
-
-"""
-def start_bot():
-    init_memelib()
-    init_fonts()
-
-    token = os.getenv('TOKEN')
-    proxy_url = os.getenv('PROXY_URL')
-    proxy_username = os.getenv('PROXY_USERNAME')
-    proxy_password = os.getenv('PROXY_PASSWORD')
-    request_kwargs = {
-        'proxy_url': proxy_url,
-        'urllib3_proxy_kwargs': {
-            'username': proxy_username,
-            'password': proxy_password,
-        }
-    }
-    print(request_kwargs)
-    UPDATER = Updater(token, use_context=True, request_kwargs=request_kwargs)
-
-    # UPDATER.bot.send_photo('352593518', file)
-    dp = UPDATER.dispatcher
-
-    dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(CommandHandler("help", help))
-    dp.add_handler(InlineQueryHandler(inlinequery))
-
-    dp.add_error_handler(error)
-
-    print('starting bot...')
-    UPDATER.start_polling()
-    UPDATER.idle()
-"""
-
 if __name__ == '__main__':
-    # main()
-    # p = multiprocessing.Process(target=start_server)
-    # p.start()
-    init_memelib()
+    init_meme_lib()
     init_fonts()
     bot = MemeMkrBot()

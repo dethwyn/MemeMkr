@@ -2,12 +2,10 @@ import os
 import textwrap
 from typing import List, Tuple
 
-from PIL import Image, ImageFont, ImageDraw, ImageFilter
+from PIL import Image, ImageFont, ImageDraw
 
-MEME_LIB = {}
-FONTS = {}
-BASEDIR_NAME = os.path.dirname(__file__)
-BASEDIR_PATH = os.path.abspath(BASEDIR_NAME)
+from global_var import BASEDIR_PATH, MEME_LIB, FONTS
+from global_var import KOKAINUM_TAGS
 
 
 class InscriptionImage:
@@ -22,9 +20,10 @@ class InscriptionImage:
 
     def __init__(self, t_area_size: Tuple[int, int],
                  t_area_position: Tuple[int, int],
-                 font_path: str, message: str, angle: float = 0,
-                 stroke_color: Tuple[int, int, int, int] = (
-                         0, 0, 0, 255)):
+                 font_path: str,
+                 message: str,
+                 angle: float = 0,
+                 stroke_color: Tuple[int, int, int, int] = (0, 0, 0, 255)):
         """ Constructor"""
         self.t_area_size = t_area_size
         x = t_area_position[0] - t_area_size[0] // 2
@@ -34,17 +33,17 @@ class InscriptionImage:
         self.message = message
         self.angle = angle
         self.stroke_color = stroke_color
-        self.img = self.__create_image()
+        self.img = self.__create_inscription()
 
     @staticmethod
-    def __init_stroke_coords(x: int, y: int):
+    def __init_stroke(x: int, y: int) -> List[Tuple[int, int]]:
         offset = [[0, 3], [-2, 2], [-3, 0], [-2, -2], [0, -3], [2, -2], [3, 0]]
-        stroke_coords: List[Tuple[int, int]] = []
+        stroke_coords = []
         for i in offset:
             stroke_coords.append((x + i[0], y + i[1]))
         return stroke_coords
 
-    def __create_image(self) -> Image.Image:
+    def __create_inscription(self) -> Image.Image:
         img = Image.new('RGBA', self.t_area_size, (0, 0, 0, 0))
         draw = ImageDraw.ImageDraw(img)
         font_size = 80
@@ -60,8 +59,8 @@ class InscriptionImage:
                 font_size -= 2
             else:
                 x, y = center_area_x - text_w // 2, center_area_y - text_h // 2
-                __stroke_coords = self.__init_stroke_coords(x, y)
-                for i in __stroke_coords:
+                stroke_coords = self.__init_stroke(x, y)
+                for i in stroke_coords:
                     draw.multiline_text(i, message, self.stroke_color,
                                         font, align='center')
                 draw.multiline_text((x, y), message, (255, 255, 255),
@@ -69,10 +68,11 @@ class InscriptionImage:
                 return img
 
 
-def init_memelib() -> None:
+def init_meme_lib() -> None:
     """
     Initializes the image library from the specified path
     and adds to the dictionary
+    :return: None
     """
     listdir = os.listdir('memelib')
     for item in listdir:
@@ -85,6 +85,7 @@ def init_fonts() -> None:
     """
     Initializes the image library from the specified path
     and adds to the dictionary
+    :return: None
     """
     listdir = os.listdir('fonts')
     for item in listdir:
@@ -93,13 +94,25 @@ def init_fonts() -> None:
         print('Font {0} found'.format(key))
 
 
+def __load_tag(tag: str) -> str:
+    if tag in KOKAINUM_TAGS:
+        tag = 'kokainum'
+    return tag
+
+
 def __image_processing(tag: str = None,
                        message: list = None,
                        name: str = 'meme', ) -> str:
     """
-    The basic function for image processing,
-    calls separate methods for different tags
+    The basic function for image processing.
+    If tag is empty creates a blank white image with the inscription
+    If message is empty creates image with inscription 'empy message'
+    :param tag: name of image
+    :param message: list of messages
+    :param name: file name
+    :return: abs path to saved image
     """
+    tag = __load_tag(tag)
     inscript = []
     if tag in MEME_LIB.keys():
         img = Image.open(MEME_LIB[tag])
@@ -149,6 +162,8 @@ def __parse_query(raw_query: str):
     """
     Parses the request submitted as an array of strings
     into a tag and message
+    :param raw_query: query from the bot
+    :return: tag - string with name of meme, message - list of messages
     """
     query = raw_query.split('\n')
     tag = query[0].replace(' ', '')
@@ -162,6 +177,12 @@ def __parse_query(raw_query: str):
 
 
 def generate_image(query: str, name: str = 'meme'):
+    """
+    Main function to generation image with inscriptions
+    :param query: query from bot
+    :param name: file name when saving
+    :return: abs path to the file
+    """
     tag, message = __parse_query(query)
     result = __image_processing(tag, message, name)
     return result
