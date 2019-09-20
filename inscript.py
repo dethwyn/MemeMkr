@@ -99,6 +99,8 @@ def __load_tag(tag: str) -> str:
         tag = 'kokainum'
     if tag in global_var.SANDMAN_TAGS:
         tag = 'sandman'
+    if tag in global_var.CATGIRLS_TAGS:
+        tag = 'girlscat'
     return tag
 
 
@@ -159,6 +161,8 @@ def __image_processing(tag: str = None,
         text_down = message[1]
         inscript.append(InscriptionImage(area, pos_up, font, text_up))
         inscript.append(InscriptionImage(area, pos_down, font, text_down))
+    elif tag == 'catgirls':
+        pass
     else:
         area = (290, 140)
         pos = (center_image_x, center_image_y)
