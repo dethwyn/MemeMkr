@@ -55,7 +55,7 @@ class InscriptionImage:
             max_symbols = area_w // one_symbol_w
             message = textwrap.fill(self.message, max_symbols)
             text_w, text_h = font.getsize_multiline(message)
-            if text_h >= area_h - 20:
+            if text_h >= area_h:
                 font_size -= 2
             else:
                 x, y = center_area_x - text_w // 2, center_area_y - text_h // 2
@@ -101,6 +101,8 @@ def __load_tag(tag: str) -> str:
         tag = 'sandman'
     elif tag in global_var.CATGIRLS_TAGS:
         tag = 'girlscat'
+    elif tag in global_var.WOLF_TAGS:
+        tag = 'wolf'
     return tag
 
 
@@ -140,19 +142,10 @@ def __image_processing(tag: str = None,
         inscript.append(InscriptionImage(area, pos, font, text))
     elif tag == 'wolf':
         area = (400, 100)
-        pos = (center_image_x, center_image_y - 200)
+        pos = (center_image_x, center_image_y - 120)
         font = FONTS['Lobster']
         text = message[0]
         inscript.append(InscriptionImage(area, pos, font, text))
-    elif tag == 'kerildiman':
-        area = (400, 100)
-        pos_up = (center_image_x, center_image_y - 50)
-        pos_down = (center_image_x, center_image_y + 250)
-        font = FONTS['Lobster']
-        text_up = message[0]
-        text_down = message[1]
-        inscript.append(InscriptionImage(area, pos_up, font, text_up))
-        inscript.append(InscriptionImage(area, pos_down, font, text_down))
     elif tag == 'sandman':
         area = (300, 100)
         pos_up = (center_image_x, center_image_y - 220)
@@ -172,6 +165,7 @@ def __image_processing(tag: str = None,
         text_down = message[1]
         inscript.append(InscriptionImage(area, pos_left, font, text_up))
         inscript.append(InscriptionImage(area, pos_right, font, text_down))
+
     else:
         area = (290, 140)
         pos = (center_image_x, center_image_y)
