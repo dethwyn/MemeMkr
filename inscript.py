@@ -4,8 +4,8 @@ from typing import List, Tuple
 
 from PIL import Image, ImageFont, ImageDraw
 
-import global_var
-from global_var import BASEDIR_PATH, MEME_LIB, FONTS
+import app_var
+from app_var import BASEDIR_PATH, MEME_LIB, FONTS
 
 
 class InscriptionImage:
@@ -95,13 +95,13 @@ def init_fonts() -> None:
 
 
 def __load_tag(tag: str) -> str:
-    if tag in global_var.KOKAINUM_TAGS:
+    if tag in app_var.KOKAINUM_TAGS:
         tag = 'kokainum'
-    elif tag in global_var.SANDMAN_TAGS:
+    elif tag in app_var.SANDMAN_TAGS:
         tag = 'sandman'
-    elif tag in global_var.CATGIRLS_TAGS:
+    elif tag in app_var.CATGIRLS_TAGS:
         tag = 'girlscat'
-    elif tag in global_var.WOLF_TAGS:
+    elif tag in app_var.WOLF_TAGS:
         tag = 'wolf'
     return tag
 
@@ -121,10 +121,10 @@ def __image_processing(tag: str = None,
     tag = __load_tag(tag)
     print(tag)
     inscript = []
-    for _ in range(0, 10-len(message)):
+    for _ in range(0, 10 - len(message)):
         message.append('message')
     # if not message:
-        # message = ['message' for i in range(10)]
+    # message = ['message' for i in range(10)]
     if tag in MEME_LIB.keys():
         img = Image.open(MEME_LIB[tag])
         img = img.convert('RGBA')
@@ -134,24 +134,23 @@ def __image_processing(tag: str = None,
         img = Image.new('RGBA', blank_size, blank_fill)
 
     img_w, img_h = img.size
-    center_image_x, center_image_y = img_w // 2, img_h // 2
-    print(message)
+    center_x, center_y = img_w // 2, img_h // 2
     if tag == 'kokainum':
         area = (450, 150)
-        pos = (center_image_x, center_image_y + 120)
+        pos = (center_x, center_y + 120)
         font = FONTS['Lobster']
         text = message[0]
         inscript.append(InscriptionImage(area, pos, font, text))
     elif tag == 'wolf':
         area = (400, 100)
-        pos = (center_image_x, center_image_y - 120)
+        pos = (center_x, center_y - 120)
         font = FONTS['Lobster']
         text = message[0]
         inscript.append(InscriptionImage(area, pos, font, text))
     elif tag == 'sandman':
         area = (300, 100)
-        pos_up = (center_image_x, center_image_y - 220)
-        pos_down = (center_image_x, center_image_y + 200)
+        pos_up = (center_x, center_y - 220)
+        pos_down = (center_x, center_y + 200)
         font = FONTS['Lobster']
         text_up = message[0]
         text_down = message[1]
@@ -159,10 +158,8 @@ def __image_processing(tag: str = None,
         inscript.append(InscriptionImage(area, pos_down, font, text_down))
     elif tag == 'girlscat':
         area = (390, 150)
-        pos_left = (center_image_x - center_image_x // 2, center_image_y + 120)
-        pos_right = (
-        center_image_x + center_image_x // 2, center_image_y + 120)
-        print(pos_left, pos_right)
+        pos_left = (center_x - center_x // 2, center_y + 120)
+        pos_right = (center_x + center_x // 2, center_y + 120)
         font = FONTS['Lobster']
         text_up = message[0]
         text_down = message[1]
@@ -171,7 +168,7 @@ def __image_processing(tag: str = None,
 
     else:
         area = (290, 140)
-        pos = (center_image_x, center_image_y)
+        pos = (center_x, center_y)
         font = FONTS['Lobster']
         text = message[0]
         inscript.append(InscriptionImage(area, pos, font, text))

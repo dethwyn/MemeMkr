@@ -8,7 +8,7 @@ from telegram import InlineQueryResultCachedPhoto, InlineQueryResultArticle, \
 from telegram.ext import Updater, InlineQueryHandler, CommandHandler
 
 from inscript import generate_image, init_fonts, init_meme_lib
-from global_var import CHANEL_ID, HELP_STRING
+from app_var import CHANEL_ID, HELP_STRING
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -83,7 +83,7 @@ class MemeMkrBot:
         return results
 
     def start(self):
-        print('starting bot...')
+        logger.info('The bot is running')
         self.updater.start_polling()
         self.updater.idle()
 
