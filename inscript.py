@@ -121,8 +121,10 @@ def __image_processing(tag: str = None,
     tag = __load_tag(tag)
     print(tag)
     inscript = []
-    if not message:
-        message = ['empty message', 'empty message']
+    for _ in range(0, 10-len(message)):
+        message.append('message')
+    # if not message:
+        # message = ['message' for i in range(10)]
     if tag in MEME_LIB.keys():
         img = Image.open(MEME_LIB[tag])
         img = img.convert('RGBA')
@@ -157,8 +159,9 @@ def __image_processing(tag: str = None,
         inscript.append(InscriptionImage(area, pos_down, font, text_down))
     elif tag == 'girlscat':
         area = (390, 150)
-        pos_left = (center_image_x - center_image_x//2, center_image_y + 120)
-        pos_right = (center_image_x + center_image_x//2, center_image_y + 120)
+        pos_left = (center_image_x - center_image_x // 2, center_image_y + 120)
+        pos_right = (
+        center_image_x + center_image_x // 2, center_image_y + 120)
         print(pos_left, pos_right)
         font = FONTS['Lobster']
         text_up = message[0]
