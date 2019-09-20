@@ -173,7 +173,7 @@ def __image_processing(tag: str = None,
         inscript.append(InscriptionImage(area, pos_left, font, text_up))
         inscript.append(InscriptionImage(area, pos_right, font, text_down))
     else:
-        area = (290, 200)
+        area = (290, 140)
         pos = (center_image_x, center_image_y)
         font = FONTS['Lobster']
         text = message[0]

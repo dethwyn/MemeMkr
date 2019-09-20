@@ -58,16 +58,13 @@ class MemeMkrBot:
         answer = [InlineQueryResultArticle(
             id=uuid4(),
             title=HELP_STRING,
-            input_message_content=InputTextMessageContent(''))]
+            input_message_content=InputTextMessageContent('ы'))]
         return answer
 
     def inlinequery(self, update, context):
         """Handle the inline query."""
         query = update.inline_query.query
-        if query.lower() == 'help':
-            results = self.get_help_string()
-        else:
-            results = self.get_picture(update, query)
+        results = self.get_picture(update, query)
         update.inline_query.answer(results)
 
     def error(self, update, context):
