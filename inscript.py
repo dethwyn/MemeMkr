@@ -162,7 +162,14 @@ def __image_processing(tag: str = None,
         inscript.append(InscriptionImage(area, pos_up, font, text_up))
         inscript.append(InscriptionImage(area, pos_down, font, text_down))
     elif tag == 'catgirls':
-        pass
+        area = (390, 120)
+        pos_left = (center_image_x - center_image_x // 2, center_image_y + 100)
+        pos_right = (center_image_x + center_image_x // 2, center_image_y + 100)
+        font = FONTS['Lobster']
+        text_up = message[0]
+        text_down = message[1]
+        inscript.append(InscriptionImage(area, pos_left, font, text_up))
+        inscript.append(InscriptionImage(area, pos_right, font, text_down))
     else:
         area = (290, 140)
         pos = (center_image_x, center_image_y)
