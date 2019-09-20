@@ -97,9 +97,9 @@ def init_fonts() -> None:
 def __load_tag(tag: str) -> str:
     if tag in global_var.KOKAINUM_TAGS:
         tag = 'kokainum'
-    if tag in global_var.SANDMAN_TAGS:
+    elif tag in global_var.SANDMAN_TAGS:
         tag = 'sandman'
-    if tag in global_var.CATGIRLS_TAGS:
+    elif tag in global_var.CATGIRLS_TAGS:
         tag = 'girlscat'
     return tag
 
@@ -117,6 +117,7 @@ def __image_processing(tag: str = None,
     :return: abs path to saved image
     """
     tag = __load_tag(tag)
+    print(tag)
     inscript = []
     if not message:
         message = ['empty message', 'empty message']
@@ -161,17 +162,18 @@ def __image_processing(tag: str = None,
         text_down = message[1]
         inscript.append(InscriptionImage(area, pos_up, font, text_up))
         inscript.append(InscriptionImage(area, pos_down, font, text_down))
-    elif tag == 'catgirls':
-        area = (390, 120)
-        pos_left = (center_image_x - center_image_x // 2, center_image_y + 100)
-        pos_right = (center_image_x + center_image_x // 2, center_image_y + 100)
+    elif tag == 'girlscat':
+        area = (390, 150)
+        pos_left = (center_image_x - center_image_x//2, center_image_y + 120)
+        pos_right = (center_image_x + center_image_x//2, center_image_y + 120)
+        print(pos_left, pos_right)
         font = FONTS['Lobster']
         text_up = message[0]
         text_down = message[1]
         inscript.append(InscriptionImage(area, pos_left, font, text_up))
         inscript.append(InscriptionImage(area, pos_right, font, text_down))
     else:
-        area = (290, 140)
+        area = (290, 200)
         pos = (center_image_x, center_image_y)
         font = FONTS['Lobster']
         text = message[0]
@@ -194,7 +196,7 @@ def __parse_query(raw_query: str):
     message = []
     for item in query[1:]:
         message.append(item)
-    return tag, message
+    return tag.lower(), message
 
 
 def generate_image(query: str, name: str = 'meme'):

@@ -56,7 +56,7 @@ class MemeMkrBot:
         """Handle the inline query."""
         query = update.inline_query.query
         name = update.inline_query.from_user['username']
-        meme_path = generate_image(query.lower(), '{0}{1}'.format(name, 'IMG'))
+        meme_path = generate_image(query, '{0}{1}'.format(name, 'IMG'))
         msg = self.updater.bot.send_photo(chat_id=CHANEL_ID,
                                           photo=open(meme_path, "rb"))
         file_id = msg.photo[0].file_id
