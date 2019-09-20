@@ -36,21 +36,17 @@ class MemeMkrBot:
 
         self.dp = self.updater.dispatcher
 
-        self.dp.add_handler(CommandHandler("start", self.start))
-        self.dp.add_handler(CommandHandler("help", self.help))
+        self.dp.add_handler(CommandHandler("start", self.start_command))
+        self.dp.add_handler(CommandHandler("help", self.help_command))
         self.dp.add_handler(InlineQueryHandler(self.inlinequery))
 
         self.dp.add_error_handler(self.error)
 
-        print('starting bot...')
-        self.updater.start_polling()
-        self.updater.idle()
-
-    def start(self, update, context):
+    def start_command(self, update, context):
         """Send a message when the command /start is issued."""
         update.message.reply_text('Hi!')
 
-    def help(self, update, context):
+    def help_command(self, update, context):
         """Send a message when the command /help is issued."""
         update.message.reply_text(HELP_STRING)
 
@@ -86,8 +82,14 @@ class MemeMkrBot:
             )]
         return results
 
+    def start(self):
+        print('starting bot...')
+        self.updater.start_polling()
+        self.updater.idle()
+
 
 if __name__ == '__main__':
     init_meme_lib()
     init_fonts()
     bot = MemeMkrBot()
+    bot.start()
