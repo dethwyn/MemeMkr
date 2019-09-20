@@ -3,11 +3,13 @@ import os
 from uuid import uuid4
 
 from dotenv import load_dotenv
-from telegram import InlineQueryResultCachedPhoto
+from telegram import InlineQueryResultCachedPhoto, InlineQueryResultArticle, \
+    InputTextMessageContent
 from telegram.ext import Updater, InlineQueryHandler, CommandHandler
 
 from inscript import generate_image, init_fonts, init_meme_lib
-from global_var import CHANEL_ID
+from global_var import CHANEL_ID, HELP_STRING
+
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO)
@@ -50,11 +52,20 @@ class MemeMkrBot:
 
     def help(self, update, context):
         """Send a message when the command /help is issued."""
-        update.message.reply_text('Help!')
+        update.message.reply_text(HELP_STRING)
+
+    def get_help_string(self):
+        answer = [InlineQueryResultArticle(
+            id=uuid4(),
+            title=HELP_STRING,
+            input_message_content=InputTextMessageContent(''))]
+        return answer
 
     def inlinequery(self, update, context):
         """Handle the inline query."""
         query = update.inline_query.query
+        if query.lower() == 'help':
+            results = self.get_help_string()
         name = update.inline_query.from_user['username']
         meme_path = generate_image(query, '{0}{1}'.format(name, 'IMG'))
         msg = self.updater.bot.send_photo(chat_id=CHANEL_ID,
@@ -74,6 +85,7 @@ class MemeMkrBot:
     def error(self, update, context):
         """Log Errors caused by Updates."""
         logger.warning('Update "%s" caused error "%s"', update, context.error)
+
 
 if __name__ == '__main__':
     init_meme_lib()
