@@ -43,6 +43,11 @@ class MemeMkrBot:
 
         self.dp.add_error_handler(self.error)
 
+    def start(self):
+        logger.info('The bot is running')
+        self.updater.start_polling()
+        self.updater.idle()
+
     def start_command(self, update, context):
         """Send a message when the command /start is issued."""
         update.message.reply_text('Hi!')
@@ -62,15 +67,15 @@ class MemeMkrBot:
 
         update.message.reply_text(app_var.TAGS_STRING)
 
+    def error(self, update, context):
+        """Log Errors caused by Updates."""
+        logger.warning('Update "%s" caused error "%s"', update, context.error)
+
     def inlinequery(self, update, context):
         """Handle the inline query."""
         query = update.inline_query.query
         results = self.get_picture(update, query)
         update.inline_query.answer(results)
-
-    def error(self, update, context):
-        """Log Errors caused by Updates."""
-        logger.warning('Update "%s" caused error "%s"', update, context.error)
 
     def get_picture(self, update, query):
         logger.info(query)
@@ -87,11 +92,6 @@ class MemeMkrBot:
                 photo_file_id=file_id,
             )]
         return results
-
-    def start(self):
-        logger.info('The bot is running')
-        self.updater.start_polling()
-        self.updater.idle()
 
     @staticmethod
     def init_tags_string():
