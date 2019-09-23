@@ -59,18 +59,8 @@ class MemeMkrBot:
         return answer
 
     def get_tags(self, update, context):
-        tags_str = 'Kokainum tags: '
-        tags_str += str(app_var.KOKAINUM_TAGS)
-        tags_str += '\n'
 
-        tags_str = 'Sandman tags: '
-        tags_str += str(app_var.SANDMAN_TAGS)
-        tags_str += '\n'
-
-        tags_str = 'Girls + cat tags: '
-        tags_str += str(app_var.CATGIRLS_TAGS)
-        tags_str += '\n'
-        update.message.reply_text(tags_str)
+        update.message.reply_text(app_var.TAGS_STRING)
 
     def inlinequery(self, update, context):
         """Handle the inline query."""
@@ -102,9 +92,29 @@ class MemeMkrBot:
         self.updater.start_polling()
         self.updater.idle()
 
+    def init_tags_string(self):
+        app_var.TAGS_STRING = 'Kokainum tags: '
+        for s in app_var.KOKAINUM_TAGS:
+            app_var.TAGS_STRING += s
+            app_var.TAGS_STRING += '; '
+        app_var.TAGS_STRING += '\n'
+
+        app_var.TAGS_STRING += 'Sandman tags: '
+        for s in app_var.SANDMAN_TAGS:
+            app_var.TAGS_STRING += s
+            app_var.TAGS_STRING += '; '
+        app_var.TAGS_STRING += '\n'
+
+        app_var.TAGS_STRING += 'Girls + cat tags: '
+        for s in app_var.CATGIRLS_TAGS:
+            app_var.TAGS_STRING += s
+            app_var.TAGS_STRING += '; '
+        app_var.TAGS_STRING += '\n'
+
 
 if __name__ == '__main__':
     init_meme_lib()
     init_fonts()
     bot = MemeMkrBot()
+    bot.init_tags_string()
     bot.start()

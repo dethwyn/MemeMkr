@@ -14,6 +14,7 @@ BOYFRIEND_TAGS = ('boyfriend', 'бойфренд')
 BRAIN_TAGS = ('brain', 'мозг', 'мегамозг')
 CHANEL_ID = '-1001423481095'
 
+TAGS_STRING = ''
 HELP_STRING = """First string - tag, second and subsequent lines are inscriptions.
 
 Example:
