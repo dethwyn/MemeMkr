@@ -114,6 +114,18 @@ class MemeMkrBot:
             app_var.TAGS_STRING += '; '
         app_var.TAGS_STRING += '\n'
 
+        app_var.TAGS_STRING += 'Brain tags: '
+        for s in app_var.BRAIN_TAGS:
+            app_var.TAGS_STRING += s
+            app_var.TAGS_STRING += '; '
+        app_var.TAGS_STRING += '\n'
+
+        app_var.TAGS_STRING += 'Crying cat tags: '
+        for s in app_var.CRYING_TAGS:
+            app_var.TAGS_STRING += s
+            app_var.TAGS_STRING += '; '
+        app_var.TAGS_STRING += '\n'
+
     @staticmethod
     def init_meme_lib() -> None:
         """
