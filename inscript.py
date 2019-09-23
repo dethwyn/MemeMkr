@@ -88,6 +88,8 @@ def __parse_tag(tag: str, len_message: int) -> str:
             tag = 'brain5'
         else:
             tag = 'brain3'
+    else:
+        tag = 'blank'
     return tag
 
 
