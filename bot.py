@@ -92,7 +92,8 @@ class MemeMkrBot:
         self.updater.start_polling()
         self.updater.idle()
 
-    def init_tags_string(self):
+    @staticmethod
+    def init_tags_string():
         app_var.TAGS_STRING = 'Kokainum tags: '
         for s in app_var.KOKAINUM_TAGS:
             app_var.TAGS_STRING += s
@@ -111,7 +112,8 @@ class MemeMkrBot:
             app_var.TAGS_STRING += '; '
         app_var.TAGS_STRING += '\n'
 
-    def init_meme_lib(self) -> None:
+    @staticmethod
+    def init_meme_lib() -> None:
         """
         Initializes the image library from the specified path
         and adds to the dictionary
@@ -123,7 +125,8 @@ class MemeMkrBot:
             MEME_LIB[key] = BASEDIR_PATH + '/memelib/' + item
             print('Picture {0} found'.format(key))
 
-    def init_fonts(self) -> None:
+    @staticmethod
+    def init_fonts() -> None:
         """
         Initializes the image library from the specified path
         and adds to the dictionary
@@ -137,9 +140,8 @@ class MemeMkrBot:
 
 
 if __name__ == '__main__':
-
+    MemeMkrBot.init_meme_lib()
+    MemeMkrBot.init_fonts()
+    MemeMkrBot.init_tags_string()
     bot = MemeMkrBot()
-    bot.init_meme_lib()
-    bot.init_fonts()
-    bot.init_tags_string()
     bot.start()
