@@ -84,7 +84,7 @@ def __parse_tag(tag: str, len_message: int) -> str:
             tag = 'brain3'
         elif len_message == 4:
             tag = 'brain4'
-        elif len_message == 5:
+        elif len_message >= 5:
             tag = 'brain5'
         else:
             tag = 'brain3'
