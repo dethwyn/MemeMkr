@@ -68,7 +68,7 @@ class InscriptionImage:
                 return img
 
 
-def __parse_tag(tag: str) -> str:
+def __parse_tag(tag: str, len_message: int) -> str:
     if tag in app_var.KOKAINUM_TAGS:
         tag = 'kokainum'
     elif tag in app_var.SANDMAN_TAGS:
@@ -80,7 +80,14 @@ def __parse_tag(tag: str) -> str:
     elif tag in app_var.BOYFRIEND_TAGS:
         tag = 'boyfriend'
     elif tag in app_var.BRAIN_TAGS:
-        tag = 'brain'
+        if len_message == 3:
+            tag = 'brain3'
+        elif len_message == 4:
+            tag = 'brain4'
+        elif len_message == 5:
+            tag = 'brain5'
+        else:
+            tag = 'brain3'
     return tag
 
 
@@ -96,7 +103,7 @@ def __image_processing(tag: str = None,
     :param name: file name
     :return: abs path to saved image
     """
-    tag = __parse_tag(tag)
+    tag = __parse_tag(tag, len(message))
     inscript = []
     for _ in range(0, 10 - len(message)):
         message.append('message')
