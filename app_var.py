@@ -11,7 +11,7 @@ SANDMAN_TAGS = ('mrsandman', 'sandman', 'сэндмен', 'mr sandman')
 CATGIRLS_TAGS = ('catgirls', 'девкикот', '2девки1кот')
 WOLF_TAGS = ('wolf', 'волк')
 BOYFRIEND_TAGS = ('boyfriend', 'бойфренд')
-BRAIN_TAGS = ('brain', 'мозг', 'мегамозг')
+BRAIN_TAGS = ('brain', 'мозг', 'мегамозг', 'brain3', 'brain4', 'brain5')
 CRYING_TAGS = ('crying', 'плач', 'кот плачет', 'плачущий кот')
 
 CHANEL_ID = '-1001423481095'

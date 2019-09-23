@@ -82,17 +82,10 @@ class MemeMkrBot:
         results = []
         if query == '':
             for key in MEME_LIB:
-                query = "{0}\n{1}".format(key, key)
-                print(query)
-                name = update.inline_query.from_user['username']
-                meme_path = generate_image(query, '{0}{1}'.format(name, 'IMG'))
-                msg = self.updater.bot.send_photo(chat_id=CHANEL_ID,
-                                                  photo=open(meme_path, "rb"))
-                file_id = msg.photo[0].file_id
-                self.updater.bot.delete_message(chat_id=CHANEL_ID,
-                                                message_id=msg.message_id)
-                results.append(InlineQueryResultCachedPhoto(id=uuid4(),
-                                                            photo_file_id=file_id))
+                answer = InputTextMessageContent(key)
+                results.append(InlineQueryResultArticle(id=uuid4(), title=key,
+                                                        input_message_content=answer))
+
         else:
             name = update.inline_query.from_user['username']
             meme_path = generate_image(query, '{0}{1}'.format(name, 'IMG'))
