@@ -36,7 +36,7 @@ class MemeMkrBot:
                                request_kwargs=request_kwargs)
 
         self.dp = self.updater.dispatcher
-        self.dp.add_handler('tags', self.get_tags)
+        self.dp.add_handler(CommandHandler('tags', self.get_tags))
         self.dp.add_handler(CommandHandler('start', self.start_command))
         self.dp.add_handler(CommandHandler('help', self.help_command))
         self.dp.add_handler(InlineQueryHandler(self.inlinequery))
