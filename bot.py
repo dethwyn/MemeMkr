@@ -73,6 +73,7 @@ class MemeMkrBot:
         logger.warning('Update "%s" caused error "%s"', update, context.error)
 
     def get_picture(self, update, query):
+        logger.info(query)
         name = update.inline_query.from_user['username']
         meme_path = generate_image(query, '{0}{1}'.format(name, 'IMG'))
         msg = self.updater.bot.send_photo(chat_id=CHANEL_ID,
@@ -123,7 +124,7 @@ class MemeMkrBot:
         for item in listdir:
             key = item.split('.')[0]
             MEME_LIB[key] = BASEDIR_PATH + '/memelib/' + item
-            print('Picture {0} found'.format(key))
+            logger.info('Picture {0} found'.format(key))
 
     @staticmethod
     def init_fonts() -> None:
@@ -136,7 +137,7 @@ class MemeMkrBot:
         for item in listdir:
             key = item.split('.')[0]
             FONTS[key] = BASEDIR_PATH + '/fonts/' + item
-            print('Font {0} found'.format(key))
+            logger.info('Font {0} found'.format(key))
 
 
 if __name__ == '__main__':

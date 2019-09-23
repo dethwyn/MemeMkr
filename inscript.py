@@ -95,7 +95,6 @@ def __image_processing(tag: str = None,
     :return: abs path to saved image
     """
     tag = __load_tag(tag)
-    print(tag)
     inscript = []
     for _ in range(0, 10 - len(message)):
         message.append('message')
