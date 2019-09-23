@@ -123,23 +123,21 @@ def __image_processing(tag: str = None,
 
     img_w, img_h = img.size
     center_x, center_y = img_w // 2, img_h // 2
+    font = FONTS['Impact']
     if tag == 'kokainum':
         area = (450, 150)
         pos = (center_x, center_y + 120)
-        font = FONTS['Lobster']
         text = message[0]
         inscript.append(InscriptionImage(area, pos, font, text))
     elif tag == 'wolf':
         area = (400, 100)
         pos = (center_x, center_y - 120)
-        font = FONTS['Lobster']
         text = message[0]
         inscript.append(InscriptionImage(area, pos, font, text))
     elif tag == 'sandman':
         area = (300, 100)
         pos_up = (center_x, center_y - 220)
         pos_down = (center_x, center_y + 200)
-        font = FONTS['Lobster']
         text_up = message[0]
         text_down = message[1]
         inscript.append(InscriptionImage(area, pos_up, font, text_up))
@@ -148,13 +146,11 @@ def __image_processing(tag: str = None,
         area = (390, 150)
         pos_left = (center_x - center_x // 2, center_y + 120)
         pos_right = (center_x + center_x // 2, center_y + 120)
-        font = FONTS['Lobster']
         text_up = message[0]
         text_down = message[1]
         inscript.append(InscriptionImage(area, pos_left, font, text_up))
         inscript.append(InscriptionImage(area, pos_right, font, text_down))
     elif tag == 'boyfriend':
-        font = FONTS['Lobster']
         area_left = (170, 120)
         pos_left = (180, 230)
         text_left = message[0]
@@ -173,7 +169,6 @@ def __image_processing(tag: str = None,
         inscript.append(
             InscriptionImage(area_right, pos_right, font, text_right))
     elif tag == 'brain5':
-        font = FONTS['Lobster']
         area = (450, 200)
         pos_1 = (240, 105)
         text_1 = message[0]
@@ -191,7 +186,6 @@ def __image_processing(tag: str = None,
         inscript.append(InscriptionImage(area, pos_4, font, text_4))
         inscript.append(InscriptionImage(area, pos_5, font, text_5))
     elif tag == 'brain3':
-        font = FONTS['Lobster']
         area = (450, 200)
         pos_1 = (240, 105)
         text_1 = message[0]
@@ -203,7 +197,7 @@ def __image_processing(tag: str = None,
         inscript.append(InscriptionImage(area, pos_2, font, text_2))
         inscript.append(InscriptionImage(area, pos_3, font, text_3))
     elif tag == 'brain4':
-        font = FONTS['Lobster']
+
         area = (450, 200)
         pos_1 = (240, 105)
         text_1 = message[0]
@@ -220,13 +214,11 @@ def __image_processing(tag: str = None,
     elif tag == 'crying':
         area = (700, 170)
         pos = (center_x, center_y + 150)
-        font = FONTS['Lobster']
         text = message[0]
         inscript.append(InscriptionImage(area, pos, font, text))
     else:
         area = (290, 140)
         pos = (center_x, center_y)
-        font = FONTS['Lobster']
         text = message[0]
         inscript.append(InscriptionImage(area, pos, font, text))
     for i in inscript:
