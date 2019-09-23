@@ -55,7 +55,7 @@ class InscriptionImage:
             max_symbols = area_w // one_symbol_w
             message = textwrap.fill(self.message, max_symbols)
             text_w, text_h = font.getsize_multiline(message)
-            if text_h >= area_h - 15 or text_w >= area_w - 10:
+            if text_h >= area_h - 15 or text_w >= area_w - 5:
                 font_size -= 2
             else:
                 x, y = center_area_x - text_w // 2, center_area_y - text_h // 2
