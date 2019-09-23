@@ -168,25 +168,22 @@ def __image_processing(tag: str = None,
             InscriptionImage(area_center, pos_center, font, text_center))
         inscript.append(
             InscriptionImage(area_right, pos_right, font, text_right))
-    elif tag == 'brain':
+    elif tag == 'brain5':
         font = FONTS['Lobster']
         area = (450, 200)
+
         pos_1 = (240, 105)
         text_1 = message[0]
 
-        area = (450, 200)
         pos_2 = (240, 315)
         text_2 = message[1]
 
-        area = (450, 200)
         pos_3 = (240, 530)
         text_3 = message[2]
 
-        area = (450, 200)
         pos_4 = (240, 730)
         text_4 = message[3]
 
-        area = (450, 200)
         pos_5 = (240, 940)
         text_5 = message[4]
 
