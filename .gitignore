@@ -3,4 +3,4 @@ __pycache__/
 .env
 *IMG.png
 test.png
-test.py
+tests.py
