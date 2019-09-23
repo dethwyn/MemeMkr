@@ -5,7 +5,7 @@ from typing import List, Tuple
 from PIL import Image, ImageFont, ImageDraw
 
 import app_var
-from app_var import BASEDIR_PATH, MEME_LIB, FONTS
+from app_var import MEME_LIB, FONTS
 
 
 class InscriptionImage:
@@ -55,7 +55,7 @@ class InscriptionImage:
             max_symbols = area_w // one_symbol_w
             message = textwrap.fill(self.message, max_symbols)
             text_w, text_h = font.getsize_multiline(message)
-            if text_h >= area_h-15:
+            if text_h >= area_h - 15:
                 font_size -= 2
             else:
                 x, y = center_area_x - text_w // 2, center_area_y - text_h // 2
@@ -66,32 +66,6 @@ class InscriptionImage:
                 draw.multiline_text((x, y), message, (255, 255, 255),
                                     font, align='center')
                 return img
-
-
-def init_meme_lib() -> None:
-    """
-    Initializes the image library from the specified path
-    and adds to the dictionary
-    :return: None
-    """
-    listdir = os.listdir('memelib')
-    for item in listdir:
-        key = item.split('.')[0]
-        MEME_LIB[key] = BASEDIR_PATH + '/memelib/' + item
-        print('Picture {0} found'.format(key))
-
-
-def init_fonts() -> None:
-    """
-    Initializes the image library from the specified path
-    and adds to the dictionary
-    :return: None
-    """
-    listdir = os.listdir('fonts')
-    for item in listdir:
-        key = item.split('.')[0]
-        FONTS[key] = BASEDIR_PATH + '/fonts/' + item
-        print('Font {0} found'.format(key))
 
 
 def __load_tag(tag: str) -> str:

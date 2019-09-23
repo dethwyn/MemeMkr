@@ -7,9 +7,9 @@ from telegram import InlineQueryResultCachedPhoto, InlineQueryResultArticle, \
     InputTextMessageContent
 from telegram.ext import Updater, InlineQueryHandler, CommandHandler
 
-from inscript import generate_image, init_fonts, init_meme_lib
+from inscript import generate_image
 import app_var
-from app_var import CHANEL_ID, HELP_STRING
+from app_var import CHANEL_ID, HELP_STRING, BASEDIR_PATH, MEME_LIB, FONTS
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -111,10 +111,35 @@ class MemeMkrBot:
             app_var.TAGS_STRING += '; '
         app_var.TAGS_STRING += '\n'
 
+    def init_meme_lib(self) -> None:
+        """
+        Initializes the image library from the specified path
+        and adds to the dictionary
+        :return: None
+        """
+        listdir = os.listdir('memelib')
+        for item in listdir:
+            key = item.split('.')[0]
+            MEME_LIB[key] = BASEDIR_PATH + '/memelib/' + item
+            print('Picture {0} found'.format(key))
+
+    def init_fonts(self) -> None:
+        """
+        Initializes the image library from the specified path
+        and adds to the dictionary
+        :return: None
+        """
+        listdir = os.listdir('fonts')
+        for item in listdir:
+            key = item.split('.')[0]
+            FONTS[key] = BASEDIR_PATH + '/fonts/' + item
+            print('Font {0} found'.format(key))
+
 
 if __name__ == '__main__':
-    init_meme_lib()
-    init_fonts()
+
     bot = MemeMkrBot()
+    bot.init_meme_lib()
+    bot.init_fonts()
     bot.init_tags_string()
     bot.start()
