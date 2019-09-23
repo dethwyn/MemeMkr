@@ -55,7 +55,7 @@ class InscriptionImage:
             max_symbols = area_w // one_symbol_w
             message = textwrap.fill(self.message, max_symbols)
             text_w, text_h = font.getsize_multiline(message)
-            if text_h >= area_h:
+            if text_h >= area_h-15:
                 font_size -= 2
             else:
                 x, y = center_area_x - text_w // 2, center_area_y - text_h // 2
@@ -103,6 +103,8 @@ def __load_tag(tag: str) -> str:
         tag = 'girlscat'
     elif tag in app_var.WOLF_TAGS:
         tag = 'wolf'
+    elif tag in app_var.BOYFRIEND_TAGS:
+        tag = 'boyfriend'
     return tag
 
 
@@ -165,7 +167,25 @@ def __image_processing(tag: str = None,
         text_down = message[1]
         inscript.append(InscriptionImage(area, pos_left, font, text_up))
         inscript.append(InscriptionImage(area, pos_right, font, text_down))
+    elif tag == 'boyfriend':
+        font = FONTS['Lobster']
+        area_left = (170, 120)
+        pos_left = (180, 230)
+        text_left = message[0]
 
+        area_center = (150, 110)
+        pos_center = (380, 150)
+        text_center = message[1]
+
+        area_right = (150, 120)
+        pos_right = (500, 230)
+        text_right = message[2]
+        inscript.append(
+            InscriptionImage(area_left, pos_left, font, text_left))
+        inscript.append(
+            InscriptionImage(area_center, pos_center, font, text_center))
+        inscript.append(
+            InscriptionImage(area_right, pos_right, font, text_right))
     else:
         area = (290, 140)
         pos = (center_x, center_y)
