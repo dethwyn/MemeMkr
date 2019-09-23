@@ -198,6 +198,21 @@ def __image_processing(tag: str = None,
         inscript.append(InscriptionImage(area, pos_1, font, text_1))
         inscript.append(InscriptionImage(area, pos_2, font, text_2))
         inscript.append(InscriptionImage(area, pos_3, font, text_3))
+    elif tag == 'brain4':
+        font = FONTS['Lobster']
+        area = (450, 200)
+        pos_1 = (240, 105)
+        text_1 = message[0]
+        pos_2 = (240, 315)
+        text_2 = message[1]
+        pos_3 = (240, 530)
+        text_3 = message[2]
+        pos_4 = (240, 730)
+        text_4 = message[3]
+        inscript.append(InscriptionImage(area, pos_1, font, text_1))
+        inscript.append(InscriptionImage(area, pos_2, font, text_2))
+        inscript.append(InscriptionImage(area, pos_3, font, text_3))
+        inscript.append(InscriptionImage(area, pos_4, font, text_4))
     else:
         area = (290, 140)
         pos = (center_x, center_y)
