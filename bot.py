@@ -90,6 +90,7 @@ class MemeMkrBot:
             InlineQueryResultCachedPhoto(
                 id=uuid4(),
                 photo_file_id=file_id,
+                caption='test'
             )]
         return results
 
