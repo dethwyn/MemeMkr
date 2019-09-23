@@ -10,7 +10,8 @@ KOKAINUM_TAGS = ('kokainum', 'кокаинум')
 SANDMAN_TAGS = ('mrsandman', 'sandman', 'mr sandman')
 CATGIRLS_TAGS = ('catgirls', 'девкикот', '2девки1кот')
 WOLF_TAGS = ('wolf', 'волк')
-BOYFRIEND_TAGS = ('boyfriend')
+BOYFRIEND_TAGS = ('boyfriend', 'бойфренд')
+BRAIN_TAGS = ('brain', 'мозг', 'мегамозг')
 CHANEL_ID = '-1001423481095'
 
 HELP_STRING = """First string - tag, second and subsequent lines are inscriptions.

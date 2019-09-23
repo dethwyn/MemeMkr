@@ -8,6 +8,7 @@ from telegram import InlineQueryResultCachedPhoto, InlineQueryResultArticle, \
 from telegram.ext import Updater, InlineQueryHandler, CommandHandler
 
 from inscript import generate_image, init_fonts, init_meme_lib
+import app_var
 from app_var import CHANEL_ID, HELP_STRING
 
 logging.basicConfig(
@@ -35,9 +36,9 @@ class MemeMkrBot:
                                request_kwargs=request_kwargs)
 
         self.dp = self.updater.dispatcher
-
-        self.dp.add_handler(CommandHandler("start", self.start_command))
-        self.dp.add_handler(CommandHandler("help", self.help_command))
+        self.dp.add_handler('tags', self.get_tags)
+        self.dp.add_handler(CommandHandler('start', self.start_command))
+        self.dp.add_handler(CommandHandler('help', self.help_command))
         self.dp.add_handler(InlineQueryHandler(self.inlinequery))
 
         self.dp.add_error_handler(self.error)
@@ -56,6 +57,20 @@ class MemeMkrBot:
             title=HELP_STRING,
             input_message_content=InputTextMessageContent('ы'))]
         return answer
+
+    def get_tags(self, update, context):
+        tags_str = 'Kokainum tags: '
+        tags_str += str(app_var.KOKAINUM_TAGS)
+        tags_str += '\n'
+
+        tags_str = 'Sandman tags: '
+        tags_str += str(app_var.SANDMAN_TAGS)
+        tags_str += '\n'
+
+        tags_str = 'Girls + cat tags: '
+        tags_str += str(app_var.CATGIRLS_TAGS)
+        tags_str += '\n'
+        update.message.reply_text(tags_str)
 
     def inlinequery(self, update, context):
         """Handle the inline query."""
