@@ -4,3 +4,4 @@ __pycache__/
 *IMG.png
 test.png
 tests.py
+deploy.bat
