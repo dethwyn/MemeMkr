@@ -215,7 +215,7 @@ def __image_processing(tag: str = None,
         inscript.append(InscriptionImage(area, pos_4, font, text_4))
     elif tag == 'crying':
         area = (700, 170)
-        pos = (center_x, center_y + 150)
+        pos = (center_x, center_y + 130)
         text = message[0]
         inscript.append(InscriptionImage(area, pos, font, text))
     elif tag == 'torero':
