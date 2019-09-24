@@ -22,18 +22,17 @@ class MemeMkrBot:
     def __init__(self):
         load_dotenv()
         token = os.getenv('TOKEN')
-        proxy_url = os.getenv('PROXY_URL')
-        proxy_username = os.getenv('PROXY_USERNAME')
-        proxy_password = os.getenv('PROXY_PASSWORD')
-        request_kwargs = {
-            'proxy_url': proxy_url,
-            'urllib3_proxy_kwargs': {
-                'username': proxy_username,
-                'password': proxy_password,
-            }
-        }
-        self.updater = Updater(token, use_context=True,
-                               request_kwargs=request_kwargs)
+        # proxy_url = os.getenv('PROXY_URL')
+        # proxy_username = os.getenv('PROXY_USERNAME')
+        # proxy_password = os.getenv('PROXY_PASSWORD')
+        # request_kwargs = {
+        #     'proxy_url': proxy_url,
+        #     'urllib3_proxy_kwargs': {
+        #         'username': proxy_username,
+        #         'password': proxy_password,
+        #     }
+        # }
+        self.updater = Updater(token, use_context=True)
 
         self.dp = self.updater.dispatcher
         self.dp.add_handler(CommandHandler('tags', self.get_tags))
