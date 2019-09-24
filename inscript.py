@@ -90,6 +90,8 @@ def __parse_tag(tag: str, len_message: int) -> str:
             tag = 'brain3'
     elif tag in app_var.CRYING_TAGS:
         tag = 'crying'
+    elif tag in app_var.TORERO_TAGS:
+        tag = 'torero'
     else:
         tag = 'blank'
     return tag
@@ -216,6 +218,20 @@ def __image_processing(tag: str = None,
         pos = (center_x, center_y + 150)
         text = message[0]
         inscript.append(InscriptionImage(area, pos, font, text))
+    elif tag == 'torero':
+        area = (290, 95)
+        pos_1 = (150, 42)
+        text_1 = message[0]
+        pos_2 = (150, 137)
+        text_2 = message[1]
+        pos_3 = (150, 232)
+        text_3 = message[2]
+        pos_4 = (150, 327)
+        text_4 = message[3]
+        inscript.append(InscriptionImage(area, pos_1, font, text_1))
+        inscript.append(InscriptionImage(area, pos_2, font, text_2))
+        inscript.append(InscriptionImage(area, pos_3, font, text_3))
+        inscript.append(InscriptionImage(area, pos_4, font, text_4))
     else:
         area = (290, 140)
         pos = (center_x, center_y)
