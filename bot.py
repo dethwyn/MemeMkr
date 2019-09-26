@@ -79,13 +79,7 @@ class MemeMkrBot:
     def get_picture(self, update, query):
         logger.info('input query ' + query)
         results = []
-        if query == '':
-            for key in MEME_LIB:
-                answer = InputTextMessageContent(key)
-                results.append(InlineQueryResultArticle(id=uuid4(), title=key,
-                                                        input_message_content=answer))
-
-        else:
+        if query != '':
             name = update.inline_query.from_user['username']
             meme_path = generate_image(query, '{0}{1}'.format(name, 'IMG'))
             msg = self.updater.bot.send_photo(chat_id=CHANEL_ID,

@@ -8,7 +8,7 @@ BASEDIR_PATH = os.path.abspath(BASEDIR_NAME)
 
 KOKAINUM_TAGS = ('kokainum', 'кокаинум')
 SANDMAN_TAGS = ('mrsandman', 'sandman', 'сэндмен', 'mr sandman')
-CATGIRLS_TAGS = ('catgirls', 'девкикот', '2девки1кот')
+CATGIRLS_TAGS = ('girlscat','catgirls', 'девкикот', '2девки1кот')
 WOLF_TAGS = ('wolf', 'волк')
 BOYFRIEND_TAGS = ('boyfriend', 'бойфренд')
 BRAIN_TAGS = ('brain', 'мозг', 'мегамозг', 'brain3', 'brain4', 'brain5')
