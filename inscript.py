@@ -23,7 +23,8 @@ class InscriptionImage:
                  font_path: str,
                  message: str,
                  angle: float = 0,
-                 stroke_color: Tuple[int, int, int, int] = (0, 0, 0, 255)):
+                 stroke_color: Tuple[int, int, int, int] = (0, 0, 0, 255),
+                 font_color: Tuple[int, int, int, int] = (255, 255, 255, 255)):
         """ Constructor"""
         self.t_area_size = t_area_size
         x = t_area_position[0] - t_area_size[0] // 2
@@ -33,6 +34,7 @@ class InscriptionImage:
         self.message = message
         self.angle = angle
         self.stroke_color = stroke_color
+        self.font_color = font_color
         self.img = self.__create_inscription()
 
     @staticmethod
@@ -63,7 +65,7 @@ class InscriptionImage:
                 for i in stroke_coords:
                     draw.multiline_text(i, message, self.stroke_color,
                                         font, align='center')
-                draw.multiline_text((x, y), message, (255, 255, 255),
+                draw.multiline_text((x, y), message, self.font_color,
                                     font, align='center')
                 return img
 
@@ -92,6 +94,8 @@ def __parse_tag(tag: str, len_message: int) -> str:
         tag = 'crying'
     elif tag in app_var.TORERO_TAGS:
         tag = 'torero'
+    elif tag in app_var.CANDLE_TAGS:
+        tag = 'candle'
     else:
         tag = 'blank'
     return tag
@@ -232,6 +236,16 @@ def __image_processing(tag: str = None,
         inscript.append(InscriptionImage(area, pos_2, font, text_2))
         inscript.append(InscriptionImage(area, pos_3, font, text_3))
         inscript.append(InscriptionImage(area, pos_4, font, text_4))
+    elif tag == 'candle':
+        area = (200, 150)
+        pos = (350, 150)
+        text = message[0]
+        inscript.append(InscriptionImage(area,
+                                         pos,
+                                         font,
+                                         text,
+                                         font_color=(170, 110, 60, 255)))
+        pass
     else:
         area = (290, 140)
         pos = (center_x, center_y)
