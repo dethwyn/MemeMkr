@@ -102,15 +102,18 @@ class MemeMkrBot:
                                                        app_var.CATGIRLS_TAGS)
         app_var.TAGS_STRING += MemeMkrBot.convert_tags('Wolf: ',
                                                        app_var.WOLF_TAGS)
-        app_var.TAGS_STRING += MemeMkrBot.convert_tags(
-            'Distracted boyfriend: ',
-            app_var.BOYFRIEND_TAGS)
+        app_var.TAGS_STRING += MemeMkrBot.convert_tags('Boyfriend: ',
+                                                       app_var.BOYFRIEND_TAGS)
         app_var.TAGS_STRING += MemeMkrBot.convert_tags('Brain: ',
                                                        app_var.BRAIN_TAGS)
         app_var.TAGS_STRING += MemeMkrBot.convert_tags('Crying cat: ',
                                                        app_var.CRYING_TAGS)
         app_var.TAGS_STRING += MemeMkrBot.convert_tags('Toreador: ',
                                                        app_var.TORERO_TAGS)
+        app_var.TAGS_STRING += MemeMkrBot.convert_tags('Candle: ',
+                                                       app_var.CANDLE_TAGS)
+        app_var.TAGS_STRING += MemeMkrBot.convert_tags('Петросян: ',
+                                                       app_var.PETROSYAN_TAGS)
 
     @staticmethod
     def convert_tags(name: str, tags: tuple):
