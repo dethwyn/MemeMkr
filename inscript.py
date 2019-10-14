@@ -23,6 +23,7 @@ class InscriptionImage:
                  font_path: str,
                  message: str,
                  angle: float = 0,
+                 text_align: str = 'center',
                  stroke_color: Tuple[int, int, int, int] = (0, 0, 0, 255),
                  font_color: Tuple[int, int, int, int] = (255, 255, 255, 255)):
         """ Constructor"""
@@ -33,6 +34,7 @@ class InscriptionImage:
         self.font_path = font_path
         self.message = message
         self.angle = angle
+        self.text_align = text_align
         self.stroke_color = stroke_color
         self.font_color = font_color
         self.img = self.__create_inscription()
@@ -64,9 +66,10 @@ class InscriptionImage:
                 stroke_coords = self.__init_stroke(x, y)
                 for i in stroke_coords:
                     draw.multiline_text(i, message, self.stroke_color,
-                                        font, align='center')
+                                        font, align=self.text_align)
                 draw.multiline_text((x, y), message, self.font_color,
-                                    font, align='center')
+                                    font, align=self.text_align)
+
                 return img
 
 
@@ -96,6 +99,8 @@ def __parse_tag(tag: str, len_message: int) -> str:
         tag = 'torero'
     elif tag in app_var.CANDLE_TAGS:
         tag = 'candle'
+    elif tag in app_var.PETROSYAN_TAGS:
+        tag = 'petrosyan'
     else:
         tag = 'blank'
     return tag
@@ -237,15 +242,20 @@ def __image_processing(tag: str = None,
         inscript.append(InscriptionImage(area, pos_3, font, text_3))
         inscript.append(InscriptionImage(area, pos_4, font, text_4))
     elif tag == 'candle':
-        area = (200, 150)
-        pos = (350, 150)
+        area = (200, 100)
+        pos = (390, 160)
+        text = message[0]
+        inscript.append(InscriptionImage(area, pos, font, text,
+                                         text_align='left',
+                                         font_color=(170, 110, 60, 255)))
+    elif tag == 'petrosyan':
+        area = (500, 120)
+        pos = (250, 540)
         text = message[0]
         inscript.append(InscriptionImage(area,
                                          pos,
                                          font,
-                                         text,
-                                         font_color=(170, 110, 60, 255)))
-        pass
+                                         text))
     else:
         area = (290, 140)
         pos = (center_x, center_y)
