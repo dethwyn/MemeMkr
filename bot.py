@@ -93,35 +93,33 @@ class MemeMkrBot:
 
     @staticmethod
     def init_tags_string():
-        app_var.TAGS_STRING = 'Kokainum tags: '
-        for s in app_var.KOKAINUM_TAGS:
-            app_var.TAGS_STRING += s
-            app_var.TAGS_STRING += '; '
-        app_var.TAGS_STRING += '\n'
+        app_var.TAGS_STRING = ''
+        app_var.TAGS_STRING += MemeMkrBot.convert_tags('Kokainum: ',
+                                                       app_var.KOKAINUM_TAGS)
+        app_var.TAGS_STRING += MemeMkrBot.convert_tags('Sandman: ',
+                                                       app_var.SANDMAN_TAGS)
+        app_var.TAGS_STRING += MemeMkrBot.convert_tags('Уelling at cat: ',
+                                                       app_var.CATGIRLS_TAGS)
+        app_var.TAGS_STRING += MemeMkrBot.convert_tags('Wolf: ',
+                                                       app_var.WOLF_TAGS)
+        app_var.TAGS_STRING += MemeMkrBot.convert_tags(
+            'Distracted boyfriend: ',
+            app_var.BOYFRIEND_TAGS)
+        app_var.TAGS_STRING += MemeMkrBot.convert_tags('Brain: ',
+                                                       app_var.BRAIN_TAGS)
+        app_var.TAGS_STRING += MemeMkrBot.convert_tags('Crying cat: ',
+                                                       app_var.CRYING_TAGS)
+        app_var.TAGS_STRING += MemeMkrBot.convert_tags('Toreador: ',
+                                                       app_var.TORERO_TAGS)
 
-        app_var.TAGS_STRING += 'Sandman tags: '
-        for s in app_var.SANDMAN_TAGS:
-            app_var.TAGS_STRING += s
-            app_var.TAGS_STRING += '; '
-        app_var.TAGS_STRING += '\n'
-
-        app_var.TAGS_STRING += 'Girls + cat tags: '
-        for s in app_var.CATGIRLS_TAGS:
-            app_var.TAGS_STRING += s
-            app_var.TAGS_STRING += '; '
-        app_var.TAGS_STRING += '\n'
-
-        app_var.TAGS_STRING += 'Brain tags: '
-        for s in app_var.BRAIN_TAGS:
-            app_var.TAGS_STRING += s
-            app_var.TAGS_STRING += '; '
-        app_var.TAGS_STRING += '\n'
-
-        app_var.TAGS_STRING += 'Crying cat tags: '
-        for s in app_var.CRYING_TAGS:
-            app_var.TAGS_STRING += s
-            app_var.TAGS_STRING += '; '
-        app_var.TAGS_STRING += '\n'
+    @staticmethod
+    def convert_tags(name: str, tags: tuple):
+        result = name
+        for s in tags:
+            result += s
+            result += '; '
+        result += '\n\n'
+        return result
 
     @staticmethod
     def init_meme_lib() -> None:
