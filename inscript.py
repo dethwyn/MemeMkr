@@ -22,6 +22,7 @@ class InscriptionImage:
                  t_area_position: Tuple[int, int],
                  font_path: str,
                  message: str,
+                 type: int = 0,
                  angle: float = 0,
                  text_align: str = 'center',
                  stroke_color: Tuple[int, int, int, int] = (0, 0, 0, 255),
@@ -37,7 +38,10 @@ class InscriptionImage:
         self.text_align = text_align
         self.stroke_color = stroke_color
         self.font_color = font_color
-        self.img = self.__create_inscription()
+        if type == 0:
+            self.img = self.__create_inscription()
+        elif type == 1:
+            self.img = self.__create_candle_inscription()
 
     @staticmethod
     def __init_stroke(x: int, y: int) -> List[Tuple[int, int]]:
@@ -71,6 +75,28 @@ class InscriptionImage:
                                     font, align=self.text_align)
 
                 return img
+
+    def __create_candle_inscription(self):
+        img = Image.new('RGBA', self.t_area_size, (0, 0, 0, 0))
+        draw = ImageDraw.ImageDraw(img)
+        font_size = 30
+        font = ImageFont.truetype(self.font_path, font_size)
+        one_symbol_w, one_symbol_h = font.getsize('y')
+        max_symbols = 200 // one_symbol_w
+        wrap_string = textwrap.fill(self.message, max_symbols)
+        # str2 = self.message[max_symbols:len(self.message)]
+        # max_symbols = 300 // one_symbol_w
+        # str2 = textwrap.fill(str2, max_symbols)
+        list_string = wrap_string.split('\n')
+
+        draw.multiline_text((120, 0), list_string[0], self.font_color,
+                            font, align=self.text_align)
+        second_string = ''
+        for item in list_string[1:len(list_string)]:
+            second_string += item + '\n'
+        draw.multiline_text((0, 40), second_string, self.font_color,
+                            font, align=self.text_align)
+        return img
 
 
 def __parse_tag(tag: str, len_message: int) -> str:
@@ -242,10 +268,11 @@ def __image_processing(tag: str = None,
         inscript.append(InscriptionImage(area, pos_3, font, text_3))
         inscript.append(InscriptionImage(area, pos_4, font, text_4))
     elif tag == 'candle':
-        area = (200, 100)
-        pos = (390, 160)
+        area = (320, 150)
+        pos = (330, 200)
         text = message[0]
         inscript.append(InscriptionImage(area, pos, font, text,
+                                         type=1,
                                          text_align='left',
                                          font_color=(170, 110, 60, 255)))
     elif tag == 'petrosyan':
@@ -257,7 +284,7 @@ def __image_processing(tag: str = None,
                                          font,
                                          text))
     else:
-        area = (290, 140)
+        area = (320, 150)
         pos = (center_x, center_y)
         text = message[0]
         inscript.append(InscriptionImage(area, pos, font, text))
